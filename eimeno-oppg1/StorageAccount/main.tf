@@ -12,18 +12,16 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "SA-${var.base_name}"
+    resource_group_name  = "rg_backend_tfstate"
     storage_account_name = "sabetfsfztzkj"
     container_name       = "tfstate"
-    key                  = "sa${local.randomstr}.terraform.tfstate"
+    key                  = "${var.backend_key}.terraform.tfstate"
   }
 }
 locals {
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
-    randomstr = random_string.random_string.result
     rg_name = "SA-RG-${var.base_name}-${local.workspace_suffix}"
     location = var.location
-    
 }
 
 resource "random_string" "sa-suffix" {
@@ -39,7 +37,7 @@ resource "azurerm_resource_group" "sa-rg" {
 }
 
 resource "azurerm_storage_account" "sa" {
-  name                     = "${lower(var.base_name)}${locals.randomstr}"
+  name                     = "${lower(var.base_name)}${random_string.random_string.result}"
   resource_group_name      = local.rg_name
   location                 = local.location
   account_tier             = "Standard"
