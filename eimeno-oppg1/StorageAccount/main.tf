@@ -15,8 +15,15 @@ terraform {
     resource_group_name  = "SA-${var.base_name}"
     storage_account_name = "sabetfsfztzkj"
     container_name       = "tfstate"
-    key                  = "sa.terraform.tfstate"
+    key                  = "sa${local.randomstr}.terraform.tfstate"
   }
+}
+locals {
+    workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
+    randomstr = random_string.random_string.result
+    rg_name = "SA-RG-${var.base_name}-${local.workspace_suffix}"
+    location = var.location
+    
 }
 
 resource "random_string" "sa-suffix" {
@@ -27,14 +34,14 @@ resource "random_string" "sa-suffix" {
 }
 
 resource "azurerm_resource_group" "sa-rg" {
-  name     = "SA-${var.base_name}"
-  location = var.location
+  name     = local.rg_name
+  location = local.location
 }
 
 resource "azurerm_storage_account" "sa" {
-  name                     = "${lower(var.base_name)}${random_string.random_string.result}"
-  resource_group_name      = azurerm_resource_group.sa-rg.name
-  location                 = azurerm_resource_group.sa-rg.location
+  name                     = "${lower(var.base_name)}${locals.randomstr}"
+  resource_group_name      = local.rg_name
+  location                 = local.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
 }
