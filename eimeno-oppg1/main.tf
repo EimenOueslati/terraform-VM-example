@@ -25,3 +25,11 @@ module "VirtualNetwork" {
   location = var.location
   backend_key = var.vn_backend_key
 }
+
+module "VirtualMachine" {
+  source = "./VirtualMachine"
+  base_name = var.vm_base_name
+  location = var.location
+  backend_key = var.vm_backend_key
+  subnet_id = module.VirtualNetwork.subnet_id
+}
