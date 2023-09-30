@@ -1,6 +1,6 @@
 locals {
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
-    rg_name = "KV-RG-${var.base_name}-${local.workspaces_suffix}"
+    rg_name = "KV-RG-${var.base_name}${local.workspaces_suffix}"
     location = var.location
     key_permissions = ["Create", "List", "Get","Backup", "Decrypt", "Delete", "Encrypt", "Import", "Purge", "Recover", "Restore", "Sign", "UnwrapKey", "Update", "Verify", "WrapKey", "Release", "Rotate", "GetRotationPolicy", "SetRotationPolicy"]
     secret_permissions = ["Get", "List", "Set", "Backup", "Delete", "Purge", "Recover", "Restore"]

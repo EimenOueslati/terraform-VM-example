@@ -53,8 +53,8 @@ module "VirtualMachine" {
   base_name      = var.base_name
   location       = var.location
   subnet_id      = module.VirtualNetwork.subnet_id_output
-  admin_username = module.KeyVault.vm_username_output
-  vm_passwd      = module.KeyVault.vm_passwd_output
+  admin_username = var.vm_username
+  vm_passwd      = var.vm_passwd
 }
 
 module "KeyVault" {

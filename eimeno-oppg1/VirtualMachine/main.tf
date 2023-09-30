@@ -1,6 +1,6 @@
 locals {
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
-    rg_name = "VM-RG-${var.base_name}-${local.workspaces_suffix}"
+    rg_name = "VM-RG-${var.base_name}${local.workspaces_suffix}"
     location = var.location
 }
 
@@ -32,7 +32,7 @@ resource "azurerm_network_interface" "nic" {
 
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                = "VM-${var.base_name}"
+  name                = "vm${lower(var.base_name)}"
   resource_group_name = local.rg_name
   location            = local.location
   size                = "Standard_F2"
