@@ -15,7 +15,7 @@ terraform {
     resource_group_name  = "rg_backend_tfstate"
     storage_account_name = "sabetfsfztzkj"
     container_name       = "tfstate"
-    key                  = "sa.${var.backend_key}.terraform.tfstate"
+    key                  = "${var.backend_key}.terraform.tfstate"
   }
 }
 locals {
