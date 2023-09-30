@@ -20,7 +20,7 @@ variable "subnet_id" {
 
 variable "admin_username" {
     type = string
-    description = "The admine username of the virtual machine"
+    description = "The admin username of the virtual machine"
   
 }
 
