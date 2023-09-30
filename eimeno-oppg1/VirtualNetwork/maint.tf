@@ -44,7 +44,7 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "example-network"
+  name                = "VNET-${var.base_name}"
   location            = local.location
   resource_group_name = local.rg_name
   address_space       = ["10.0.0.0/16"]
@@ -58,7 +58,7 @@ resource "azurerm_subnet" "subnet01" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-resource "azurerm_subnet_network_security_group_association" "example" {
+resource "azurerm_subnet_network_security_group_association" "nsg-association" {
   subnet_id                 = azurerm_subnet.subnet01.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
