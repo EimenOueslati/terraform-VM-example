@@ -1,8 +1,3 @@
-variable "backend_key" {
-    type = string
-    description = "The name of the key for the backend"
-}
-
 variable "base_name" {
     type = string
     description = "The base name for all the resources in the module"

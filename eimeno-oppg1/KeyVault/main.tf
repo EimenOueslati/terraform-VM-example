@@ -1,22 +1,6 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "3.74.0"
-    }
-  }
-
-  backend "azurerm" {
-    resource_group_name  = "rg_backend_tfstate"
-    storage_account_name = "sabetfsfztzkj"
-    container_name       = "tfstate"
-    key                  = "${var.backend_key}.terraform.tfstate"
-  }
-}
-
 locals {
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
-    rg_name = "KV-RG-${var.base_name}-${local.workspace_suffix}"
+    rg_name = "KV-RG-${var.base_name}-${local.workspaces_suffix}"
     location = var.location
     key_permissions = ["Create", "List", "Get","Backup", "Decrypt", "Delete", "Encrypt", "Import", "Purge", "Recover", "Restore", "Sign", "UnwrapKey", "Update", "Verify", "WrapKey", "Release", "Rotate", "GetRotationPolicy", "SetRotationPolicy"]
     secret_permissions = ["Get", "List", "Set", "Backup", "Delete", "Purge", "Recover", "Restore"]

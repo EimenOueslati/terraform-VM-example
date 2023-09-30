@@ -1,26 +1,6 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "3.74.0"
-    }
-
-    random = {
-      source = "hashicorp/random"
-      version = "3.5.1"
-    }
-  }
-
-  backend "azurerm" {
-    resource_group_name  = "rg_backend_tfstate"
-    storage_account_name = "sabetfsfztzkj"
-    container_name       = "tfstate"
-    key                  = "${var.backend_key}.terraform.tfstate"
-  }
-}
 locals {
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
-    rg_name = "SA-RG-${var.base_name}-${local.workspace_suffix}"
+    rg_name = "SA-RG-${var.base_name}-${local.workspaces_suffix}"
     location = var.location
 }
 
@@ -37,7 +17,7 @@ resource "azurerm_resource_group" "sa-rg" {
 }
 
 resource "azurerm_storage_account" "sa" {
-  name                     = "${lower(var.base_name)}${random_string.random_string.result}"
+  name                     = "${lower(var.base_name)}${random_string.sa-suffix.result}"
   resource_group_name      = local.rg_name
   location                 = local.location
   account_tier             = "Standard"

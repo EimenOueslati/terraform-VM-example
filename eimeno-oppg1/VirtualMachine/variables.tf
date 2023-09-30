@@ -8,11 +8,6 @@ variable "location" {
     description = "The Azure region that the resources should be deployed in" 
 }
 
-variable "backend_key" {
-    type = string
-    description = "The name of the key for the backend"
-}
-
 variable "subnet_id" {
     type = string
     description = "The subnet if for the IP adress of the virtual machine"
