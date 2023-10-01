@@ -1,18 +1,16 @@
 locals {
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
-    rg_name = "VN-RG-${var.base_name}${local.workspaces_suffix}"
-    location = var.location
 }
 
 resource "azurerm_resource_group" "vn-rg" {
-  name     = local.rg_name
-  location = local.location
+  name     = "VN-RG-${var.base_name}${local.workspaces_suffix}"
+  location = var.location
 }
 
 resource "azurerm_network_security_group" "nsg" {
   name                = "NSG-${var.base_name}"
-  location            =local.location
-  resource_group_name = local.rg_name
+  location            =azurerm_resource_group.vn-rg.location
+  resource_group_name = azurerm_resource_group.vn-rg.name
 
    security_rule {
     name                       = "Allow-Public-IP"
@@ -29,15 +27,15 @@ resource "azurerm_network_security_group" "nsg" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                = "VNET-${var.base_name}"
-  location            = local.location
-  resource_group_name = local.rg_name
+  location            = azurerm_resource_group.vn-rg.location
+  resource_group_name = azurerm_resource_group.vn-rg.name
   address_space       = ["10.0.0.0/16"]
   dns_servers         = ["10.0.0.4", "10.0.0.5"]
 }
 
 resource "azurerm_subnet" "subnet01" {
   name                 = "subnet01-${var.base_name}"
-  resource_group_name  = local.rg_name
+  resource_group_name  = azurerm_resource_group.vn-rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }

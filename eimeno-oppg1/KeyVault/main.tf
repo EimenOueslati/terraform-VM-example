@@ -1,23 +1,21 @@
 locals {
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
-    rg_name = "KV-RG-${var.base_name}${local.workspaces_suffix}"
-    location = var.location
     key_permissions = ["Create", "List", "Get","Backup", "Decrypt", "Delete", "Encrypt", "Import", "Purge", "Recover", "Restore", "Sign", "UnwrapKey", "Update", "Verify", "WrapKey", "Release", "Rotate", "GetRotationPolicy", "SetRotationPolicy"]
     secret_permissions = ["Get", "List", "Set", "Backup", "Delete", "Purge", "Recover", "Restore"]
     storage_permissions = ["Get", "List", "Set", "Backup", "Delete", "DeleteSAS", "GetSAS", "ListSAS", "Purge", "Recover", "RegenerateKey", "Restore", "SetSAS", "Update"]
 }
 
 resource "azurerm_resource_group" "kv-rg" {
-  name     = local.rg_name
-  location = local.location
+  name     = "KV-RG-${var.base_name}${local.workspaces_suffix}"
+  location = var.location
 }
 
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "kv" {
   name                        = "KV-${var.base_name}"
-  location                    = local.location
-  resource_group_name         = local.rg_name
+  location                    = azurerm_resource_group.kv-rg.location
+  resource_group_name         = azurerm_resource_group.kv-rg.name
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7

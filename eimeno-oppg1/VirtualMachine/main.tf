@@ -1,27 +1,25 @@
 locals {
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
-    rg_name = "VM-RG-${var.base_name}${local.workspaces_suffix}"
-    location = var.location
     vm_sizes= ["Standard_F2", "Standard_F4", "Standard_F8", "Standard_F16", "Standard_F32", "Standard_F64", "Standard_F72"]
 }
 
 resource "azurerm_resource_group" "vm-rg" {
-  name     = local.rg_name
-  location = local.location
+  name     = "VM-RG-${var.base_name}${local.workspaces_suffix}"
+  location = var.location
 }
 
 resource "azurerm_public_ip" "pip" {
   name                = "PIP-${var.base_name}"
-  resource_group_name = local.rg_name
-  location            = local.location
+  resource_group_name = azurerm_resource_group.vm-rg.name
+  location            = azurerm_resource_group.vm-rg.location
   allocation_method   = "Static"
 }
 
 
 resource "azurerm_network_interface" "nic" {
   name                = "NIC-${var.base_name}"
-  location            = local.location
-  resource_group_name = local.rg_name
+  location            = azurerm_resource_group.vm-rg.location
+  resource_group_name = azurerm_resource_group.vm-rg.name
 
   ip_configuration {
     name                          = "internal"
@@ -34,8 +32,8 @@ resource "azurerm_network_interface" "nic" {
 
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = "vm${lower(var.base_name)}"
-  resource_group_name = local.rg_name
-  location            = local.location
+  resource_group_name = azurerm_resource_group.vm-rg.name
+  location            = azurerm_resource_group.vm-rg.location
   size                = local.vm_sizes[0]
   admin_username      = var.admin_username
   admin_password      = var.vm_passwd
