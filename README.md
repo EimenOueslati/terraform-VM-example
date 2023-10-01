@@ -1,3 +1,4 @@
+The folder is saved in the following public repository:
 # Pre-requisites (Windows)
 
 In order to use the configuration files in the folder some software installations are recommended and/or necessary:
@@ -22,7 +23,7 @@ The folder contains multiple subfolders that describe the resources to be create
 - **The key vault module:** This module is used to create a key vault to store secrets and it defines a resource group, a key vault with the appropriate access policies, in addition to three secrets one for the storage account access key, one for the VM username, and one for the VM password. All the secrets are encrypted and not stored as plain text.
 
 The following diagram is a high-level demonstration of the configuration structure:
- ![Alt text](image-1.png)
+ ![Alt text](images/image-1.png)
 
 
 # Configuration Usage
@@ -44,7 +45,7 @@ In order to use the configuration files in the folder through VScode or other so
     These environment variables are temporary and are valid for a single session.
     After executing the command, the following output should be received:
 
-    ![Alt text](image-2.png)
+    ![Alt text](images/image-2.png)
 
 - The third step which is optional but good practice is to run the command "terraform fmt" which will format the configuration files and "terraform validate" which will check if the configuration is a valid one.
 
@@ -61,11 +62,10 @@ In order to use the configuration files in the folder through VScode or other so
 ## The backend:
 
 The backend used in this configuration is the one we were instructed to create in the weekly assignment during the lecture labs:
-
-![Alt text](image-3.png)
+    ![Alt text](images/image-3.png)
 
 The tfstate file for the resources created is called "operraTerra.terraform.sfstate":
- ![Alt text](image-4.png)
+ ![Alt text](images/image-4.png)
 
 
 ## The storage account:
@@ -73,13 +73,12 @@ The tfstate file for the resources created is called "operraTerra.terraform.sfst
 The storage account module creates the following resources:
 
 - Resource group called "SA-RG-OperaTerra":
-
-    ![Alt text](image-5.png)
+    ![Alt text](images/image-5.png)
 
 - Storage account with the name "operaterrah3insk6c":
- ![Alt text](image-6.png)
+    ![Alt text](images/image-6.png)
 - Storage container with the name "sc-operaterra":
- ![Alt text](image-7.png)
+    ![Alt text](images/image-7.png)
 
 
 ## Virtual network:
@@ -88,15 +87,15 @@ The virtual network module creates the following resources:
 
 - A resources group with the name "VN-RG-operaterra":
 
-    ![Alt text](image-8.png)
+    ![Alt text](images/image-8.png)
 
 - A network security group with the name "NSG-operaTerra":
- ![Alt text](image-9.png)
+ ![Alt text](images/image-9.png)
 - A virtual network with the name "VNET-OperaTerra":
- ![Alt text](image-10.png)
+ ![Alt text](images/image-10.png)
 
 - A subnet with the name "subnet01-OperaTerra" that is associated with previous NSG:
- ![Alt text](image-11.png)
+ ![Alt text](images/image-11.png)
 
 
 ## Virtual machine:
@@ -105,30 +104,30 @@ The virtual machine module creates the following resources:
 
 - A resource group with the name "VM-RG-OperaTerraf:
 
-    ![Alt text](image-12.png)
+    ![Alt text](images/image-12.png)
 
 - A public IP address with the name "PIP-OperaTerra":
- ![Alt text](image-13.png)
+ ![Alt text](images/image-13.png)
 - A network interface card with the name "NIC-OperaTerra" that uses the previous public IP address:
 
-    ![Alt text](image-14.png)
+    ![Alt text](images/image-14.png)
 
 - A virtual machine with the name "vmoperaterra" that uses the previous NIC:
 
-    ![Alt text](image-15.png)
+    ![Alt text](images/image-15.png)
 
 ## The key vault
 
 The key vault module creates the following resources:
 
 - A resource group with the name "KV-RG-OperaTerra":
- ![Alt text](image-16.png)
+ ![Alt text](images/image-16.png)
 - A key vault with the name "KV-OperaTerra":
- ![Alt text](image-17.png)
+ ![Alt text](images/image-17.png)
 
 - Three secrets for the storage container access key, VM username, and VM password:
 
-    ![Alt text](image-18.png)
+    ![Alt text](images/image-18.png)
 
 
 # Destruction of resources:
@@ -136,17 +135,16 @@ The key vault module creates the following resources:
 The destruction of resources is done by executing the command "terraform destroy" (the application was given the necessary access permission to destroy the key vault secrets).
 
  Before destruction:
-
-![Alt text](image-19.png)
+    ![Alt text](images/image-19.png)
 
 After destruction:
 
 - Destruction confirmation in the command line interface:
 
-    ![Alt text](image-20.png)
+    ![Alt text](images/image-20.png)
 
 - Deletion of resource groups from Azure portal:
-    ![Alt text](image-21.png)
+    ![Alt text](images/image-21.png)
 
 # Design Choices and Rationale
 
