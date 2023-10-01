@@ -4,6 +4,7 @@ variable "location" {
 
 }
 
+#This variable should not include any special characters or spaces as it is used in the storage account name
 variable "base_name" {
   type        = string
   description = "The base name for the storage account resource"
