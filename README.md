@@ -3,11 +3,11 @@ The folder is saved in the following public repository: https://github.com/Eimen
 
 In order to use the configuration files in the folder some software installations are recommended and/or necessary:
 
-- **Visual Studio Code** (optional but very helpful): VScode is an integrated development environment that is very useful for editing configuration files. Some of its most helpful features are code completion, syntax highlight, large selection of useful extensions.
+- **Visual Studio Code** (optional but very helpful): VScode is an integrated development environment that is very useful for editing configuration files. Some of its most helpful features are code completion, syntax highlighting, large selection of useful extensions.
 
 - **Chocolatey** (optional): Chocolatey is a package manager and installer for Windows. It makes the process of downloading and installing software very simple and will be useful in the next steps.
 
-- **Terraform** (mandatory): Terraform is a IaC tool that uses a declarative langue which makes creating, managing, and destroying resources on cloud platforms simple and intuitive.
+- **Terraform** (mandatory): Terraform is an IaC tool that uses a declarative langue which makes creating, managing, and destroying resources on cloud platforms simple and intuitive.
 
 - **Azure CLI** (mandatory): "The Azure Command-Line interface (CLI) is a cross-platform command-line tool to connect to Azure and execute administrative commands on Azure resources." (Microsoft, 2023)
 
@@ -19,7 +19,7 @@ The folder contains multiple subfolders that describe the resources to be create
 - **The root module** : This module is responsible for defining the required providers in addition to orchestrating the child modules and passing data from one module to the other. For our case we are passing the subnet id from the virtual network module to the virtual machine module to connect the VM to the subnet.
 - **The storage account module:** This module includes the definition of a resource group, storage account, and a storage container. The storage account name in this module uses a random string from the random provider in terraform to create a unique name since the storage accounts in Azure are required to be globally unique.
 - **The virtual network module:** This module defines the resource group for the virtual network as well as the network security group, virtual network, a single subnet, and an association to link the subnet and the security group. This module also contains and output file to output the subnet id to link it to the network interface card of the virtual machine.
-- **The virtual machine module:** this module defines A resource group, the actual virtual machine, and the necessary components for the VM to function such as a network interface card, a public IP to connect to the VM.
+- **The virtual machine module:** this module defines a resource group, the actual virtual machine, and the necessary components for the VM to function such as a network interface card, a public IP to connect to the VM.
 - **The key vault module:** This module is used to create a key vault to store secrets and it defines a resource group, a key vault with the appropriate access policies, in addition to three secrets one for the storage account access key, one for the VM username, and one for the VM password. All the secrets are encrypted and not stored as plain text.
 
 The following diagram is a high-level demonstration of the configuration structure:
@@ -152,11 +152,11 @@ Several choices went into making the configuration as flexible as possible, othe
 
 
 ## Flexibility choices:
-- **Use of variables:** On of the most obvious yet most powerful choices for flexibility is the use of variables. It allows the configuration to be tailored to the need of specific use cases as well as reduce repetition and redundancy. Most common use cases of variables are base names for resources, locations, and resource names.
+- **Use of variables:** One of the most obvious yet most powerful choices for flexibility is the use of variables. It allows the configuration to be tailored to the need of specific use cases as well as reduce repetition and redundancy. Most common use cases of variables are base names for resources, locations, and resource names.
 - **Use of modules:** The use modules allow the configuration to be more flexible in the sense that most modules, with some exceptions, are not strictly interdependent.
 - **Use of local variables:** The use of local variables provides a lot of convenience as it reduces redundancy and increases consistency as well as providing quality of life options such as removing the need to search the documentation for field values (access permission, storage account types, VM sizes etc) but provide a preset list for those values.
-- **Use of different resource group per module:** The use of a separate resource group per module offers mor granularity as resources can be created independently. For example, if a team has the need for only a subset of the resources in the configuration, or a duplicate of a certain resource, it is easy to created single resources form the individual modules.
-- **Use of workspaces:** In the local variables the workspace name is set in the resource group. This will allow the same config files to be used in different workspaces which will ensure consistency when working in different environment like for example development, staging, and production environments.
+- **Use of different resource group per module:** The use of a separate resource group per module offers more granularity as resources can be created independently. For example, if a team has the need for only a subset of the resources in the configuration, or a duplicate of a certain resource, it is easy to created single resources form the individual modules.
+- **Use of workspaces:** In the local variables the workspace name is set in the resource group. This will allow the same config files to be used in different workspaces which will ensure consistency when working in different environments like for example development, staging, and production environments.
 -
 ## Simplicity choices:
 - **Use of a single provider block:** The use of a single provider and backend block in the root module to avoid repeating the same information in every module. However, this might reduce flexible in the sense that if a single module is to be copied into a different folder to be used separately the provider and backend block must be manually copied in the main configuration file.
