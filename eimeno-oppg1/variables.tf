@@ -35,5 +35,11 @@ variable "vm_passwd" {
   description = "The password for the virtual machine"
 }
 
+variable "allowed_ip" {
+  type = string
+  description = "The IP address that should be allowed to access the virtual machine"
+  
+}
+
 
 
