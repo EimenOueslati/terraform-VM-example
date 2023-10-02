@@ -1,4 +1,5 @@
 locals {
+  #This is used to distinguish between the different workspaces
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
     key_permissions = ["Create", "List", "Get","Backup", "Decrypt", "Delete", "Encrypt", "Import", "Purge", "Recover", "Restore", "Sign", "UnwrapKey", "Update", "Verify", "WrapKey", "Release", "Rotate", "GetRotationPolicy", "SetRotationPolicy"]
     secret_permissions = ["Get", "List", "Set", "Backup", "Delete", "Purge", "Recover", "Restore"]
