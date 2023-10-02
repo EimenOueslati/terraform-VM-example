@@ -1,4 +1,5 @@
 locals {
+    #This is used to distinguish between the different workspaces
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
     vm_sizes= ["Standard_F2", "Standard_F4", "Standard_F8", "Standard_F16", "Standard_F32", "Standard_F64", "Standard_F72"]
 }

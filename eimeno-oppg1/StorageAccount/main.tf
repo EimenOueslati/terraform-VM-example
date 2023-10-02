@@ -1,4 +1,5 @@
 locals {
+    #This is used to distinguish between the different workspaces
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
     storage_account_type = ["Standard", "Standard_LRS", "Standard_GRS", "Standard_RAGRS", "Standard_ZRS", "Premium_LRS"]
 }
