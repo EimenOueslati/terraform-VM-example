@@ -1,4 +1,5 @@
 locals {
+    #This is used to distinguish between the different workspaces
     workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}"
 }
 
@@ -20,7 +21,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "*"
-    source_address_prefix      = "158.248.1.71"
+    source_address_prefix      = var.allowed_ip
     destination_address_prefix = "*"
   }
 }
