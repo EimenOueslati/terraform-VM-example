@@ -36,9 +36,9 @@ variable "vm_passwd" {
 }
 
 variable "allowed_ip" {
-  type = string
+  type        = string
   description = "The IP address that should be allowed to access the virtual machine"
-  
+
 }
 
 

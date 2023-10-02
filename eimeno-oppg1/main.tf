@@ -43,9 +43,9 @@ module "StorageAccount" {
 }
 
 module "VirtualNetwork" {
-  source    = "./VirtualNetwork"
-  base_name = var.base_name
-  location  = var.location
+  source     = "./VirtualNetwork"
+  base_name  = var.base_name
+  location   = var.location
   allowed_ip = var.allowed_ip
 }
 
