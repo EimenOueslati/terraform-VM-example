@@ -1,4 +1,4 @@
-The folder is saved in the following public repository: https://github.com/EimenOueslati/eimeno-oppg1.git
+# Example of Deployment of a Virtual Machine on MS Azure Using Terraform
 # Pre-requisites (Windows)
 
 In order to use the configuration files in the folder some software installations are recommended and/or necessary:
